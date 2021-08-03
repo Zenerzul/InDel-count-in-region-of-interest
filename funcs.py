@@ -12,18 +12,6 @@ def decode_CIGAR(string_code, starting_position):
             print('Error in ', i)
             break
     return full_string
-
-
-def find_indels(char, string):
-    global indexes
-    position = string.find(char) + 1
-    indexes.append(position)
-    new_string = string[position + len(char)-1:]
-    if char in new_string:
-        return find_indels(char, new_string)
-    if len(indexes) > 1:
-        for i in range(1, len(indexes)):
-            indexes[i] += indexes[i-1] + len(char) - 1
             
 
 def select_region(string_code, starting_position):
