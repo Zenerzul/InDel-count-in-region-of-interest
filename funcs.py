@@ -14,6 +14,23 @@ def decode_CIGAR(string_code, starting_position):
     return full_string
             
 
+ def find_indels(char, string):
+    indexes = list()
+
+    def find_indels_inner(char, string):
+        position = string.find(char) + 1
+        indexes.append(position)
+        new_string = string[position + len(char) - 1:]
+        if char in new_string:
+            return find_indels_inner(char, new_string)
+
+    find_indels_inner(char, string)
+    if len(indexes) > 1:
+        for i in range(1, len(indexes)):
+            indexes[i] += indexes[i - 1] + len(char) - 1
+    return indexes
+    
+    
 def select_region(string_code, starting_position):
     position_of_cut = 3383
     delta = 40
